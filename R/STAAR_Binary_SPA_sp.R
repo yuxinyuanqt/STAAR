@@ -214,7 +214,7 @@ STAAR_Binary_SPA_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=N
     }
     
     num_variant <- sum(RV_label) #dim(G)[2]
-    cMAC <- sum(G)
+    cMAC <- sum(G@x)
     num_annotation <- dim(annotation_phred)[2]+1
     
     ## STAAR-B

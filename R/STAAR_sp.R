@@ -198,7 +198,7 @@ STAAR_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=NULL,
     }
     
     num_variant <- sum(RV_label) #dim(G)[2]
-    cMAC <- sum(G)
+    cMAC <- sum(G@x)
     num_annotation <- dim(annotation_phred)[2]+1
     results_STAAR_O <- CCT(pvalues)
     results_ACAT_O <- CCT(pvalues[c(1,num_annotation+1,2*num_annotation+1,3*num_annotation+1,4*num_annotation+1,5*num_annotation+1)])
