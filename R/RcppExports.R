@@ -73,6 +73,10 @@ STAAR_B_Binary_SPA <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol
     .Call(`_STAAR_STAAR_B_Binary_SPA`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter)
 }
 
+STAAR_B_Binary_SPA_sp <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter) {
+    .Call(`_STAAR_STAAR_B_Binary_SPA_sp`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter)
+}
+
 STAAR_B_SPA <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, G_sp, X, working, sigma, fam) {
     .Call(`_STAAR_STAAR_B_SPA`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, G_sp, X, working, sigma, fam)
 }
@@ -81,8 +85,20 @@ STAAR_B_SPA_SMMAT <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol,
     .Call(`_STAAR_STAAR_B_SPA_SMMAT`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, G_sp, P)
 }
 
+STAAR_B_SPA_SMMAT_sp <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, P) {
+    .Call(`_STAAR_STAAR_B_SPA_SMMAT_sp`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, P)
+}
+
 STAAR_B_SPA_SMMAT_sparse <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, G_sp, Sigma_i, Sigma_iX, cov) {
     .Call(`_STAAR_STAAR_B_SPA_SMMAT_sparse`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, G_sp, Sigma_i, Sigma_iX, cov)
+}
+
+STAAR_B_SPA_SMMAT_sparse_sp <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, Sigma_i, Sigma_iX, cov) {
+    .Call(`_STAAR_STAAR_B_SPA_SMMAT_sparse_sp`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, Sigma_i, Sigma_iX, cov)
+}
+
+STAAR_B_SPA_sp <- function(G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, X, working, sigma, fam) {
+    .Call(`_STAAR_STAAR_B_SPA_sp`, G, XW, XXWX_inv, residuals, muhat, weights_B, tol, max_iter, p_filter_cutoff, X, working, sigma, fam)
 }
 
 STAAR_O <- function(G, X, working, sigma, fam, residuals, weights_B, weights_S, weights_A, mac, mac_thres = 10L) {
