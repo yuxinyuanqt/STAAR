@@ -109,7 +109,7 @@ STAAR_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=NULL,
   if(!inherits(genotype_sp, "sparseMatrix")){
     genotype_sp <- as(genotype_sp,"dgCMatrix")
   }
-  RV_label <- as.vector((MAF<rare_maf_cutoff)&(MAF>0))
+  RV_label <- as.vector((MAF<rare_maf_cutoff)&(MAF>0)&(!is.na(MAF)))
   G <- genotype_sp[,RV_label]
   
   rm(genotype_sp)
@@ -122,6 +122,10 @@ STAAR_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=NULL,
   
   if(sum(RV_label) >= rv_num_cutoff){
     MAF <- MAF[RV_label]
+    if(any(is.na(G@x)))
+    {
+      G <- na.replace.sp(G,m=2*MAF)
+    }
     gc()
     
     annotation_rank <- 1 - 10^(-annotation_phred/10)
