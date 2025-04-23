@@ -9,11 +9,10 @@
 #' 
 #' @param genotype_sp a sparse genotype matrix (dgCMatrix) of dimension n*p,
 #' where n is the sample size and p is the number of genetic variants.
-#' The matrix should be extracted using \code{\link{Genotype_sp_extraction}},
+#' The matrix should be extracted using \code{STAARpipeline::Genotype_sp_extraction},
 #' and it has been flipped: only the minor allele is stored (coded as 1), while the major allele is not stored (coded as 0).
 #' @param MAF a numeric vector of minor allele frequencies for the variants in \code{genotype_sp}.
-#' It can be computed as \code{MAC / (2 * n)} using \code{Matrix::colSums(genotype_sp)} to obtain MAC,
-#' where \code{n} is the number of samples.
+#' It can be computed using \code{Matrix::colMeans(genotype_sp,na.rm = TRUE)/2}.
 #' @param obj_nullmodel an object from fitting the null model, which is the
 #' output from either \code{\link{fit_null_glm}} function for unrelated samples or
 #' \code{\link{fit_null_glmmkin}} function for related samples. Note that \code{\link{fit_null_glmmkin}}
@@ -72,7 +71,7 @@
 #' (\href{https://doi.org/10.1016/j.ajhg.2019.03.002}{pub})
 #' @export
 
-STAAR_Binary_SPA_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=NULL,
+STAAR_Binary_SPA_sp <- function(genotype_sp,MAF=NULL,obj_nullmodel,annotation_phred=NULL,
                                 rare_maf_cutoff=0.01,rv_num_cutoff=2,
                                 rv_num_cutoff_max=1e9,
                                 tol=.Machine$double.eps^0.25,max_iter=1000,
@@ -82,8 +81,16 @@ STAAR_Binary_SPA_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=N
     stop("genotype is not a matrix!")
   }
   
+  if(!inherits(genotype_sp, "sparseMatrix")){
+    genotype_sp <- as(genotype_sp,"dgCMatrix")
+  }
+  
   if(dim(genotype_sp)[2] == 1){
     stop(paste0("Number of rare variant in the set is less than 2!"))
+  }
+  
+  if(is.null(MAF)){
+    MAF <- Matrix::colMeans(genotype_sp,na.rm = TRUE)/2
   }
   
   annotation_phred <- as.data.frame(annotation_phred)
@@ -91,9 +98,6 @@ STAAR_Binary_SPA_sp <- function(genotype_sp,MAF,obj_nullmodel,annotation_phred=N
     stop(paste0("Dimensions don't match for genotype, MAF and annotation!"))
   }
   
-  if(!inherits(genotype_sp, "sparseMatrix")){
-    genotype_sp <- as(genotype_sp,"dgCMatrix")
-  }
   RV_label <- as.vector((MAF<rare_maf_cutoff)&(MAF>0)&(!is.na(MAF)))
   G <- genotype_sp[,RV_label]
   rm(genotype_sp)

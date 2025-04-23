@@ -1,16 +1,16 @@
 #' Replace Missing Values in a Sparse Genotype Matrix
 #'
 #' The \code{na.replace.sp} function replaces missing values (NA) in a sparse genotype matrix 
-#' (`dgCMatrix` format). If `is_NA_to_Zero = TRUE`, NA values are replaced with 0. 
-#' Otherwise, NA values in each column are replaced with the corresponding entries in `m`.
+#' (dgCMatrix format). If is_NA_to_Zero = TRUE, NA values are replaced with 0. 
+#' Otherwise, NA values in each column are replaced with the corresponding entries in "m".
 #' This function is inspired by \code{glmnet::na.replace} for sparse matrices.
 #'
-#' @param genotype_sp A sparse genotype matrix of class `dgCMatrix` from the \code{\link{Matrix}} package.
+#' @param genotype_sp A sparse genotype matrix of class dgCMatrix from the \code{\link{Matrix}} package.
 #' @param m A numeric vector specifying the replacement values for each column.
 #' @param is_NA_to_Zero A logical value indicating whether NA values should be replaced with 0 
-#' (default: FALSE). If FALSE, NA values are replaced column-wise using `m`.
+#' (default: FALSE). If FALSE, NA values are replaced column-wise using "m".
 #' 
-#' @return A `dgCMatrix` object with missing values replaced accordingly.
+#' @return A dgCMatrix object with missing values replaced accordingly.
 #' 
 #' @examples
 #' library(Matrix)
